@@ -1,7 +1,7 @@
 # paid_traffic_studies
 Trying to learn paid traffic, using Python, facebook ADS and google ADS.
 
-# views.py technical terms
+## views.py technical terms
 This section is to understand the technical terms of views.
 
 ### ARC(Ajax Render Content)
@@ -22,3 +22,9 @@ ajax example:
         console.error("An error occurred:", error);
     }
 });'''
+
+## Next steps
+The next steps of this project
+
+### Create a new way of database
+A database that we can upload to git because of the groups, and other things that we want to have inside the database, at the moment we ignore the db.sqlite3 database, because that we need a other way to upload a database, for now I'll upload for myself the db.sqlite3
