@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+{% include "dashboard/sidebar.html" %}
+<div class="container" id="dashboard-screen-content">
+</div>
+{% endblock %}
+
+{% block script %}
+<script type="text/javascript">
+    updateDashboardScreen('main')
+</script>
+{% endblock script %}

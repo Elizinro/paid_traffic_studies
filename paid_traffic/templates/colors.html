@@ -1,0 +1,36 @@
+{% load static %}
+<div class="d-flex justify-content-center">
+    <div class="d-flex flex-wrap">
+        <button class="btn btn-primary mx-auto" id="hide-colors">Esconder</button>
+    </div>
+    <div id="color-container" class="d-flex flex-wrap">
+        {% for color_name, color_code in request.mw_colors.items %}
+            <div class="color-square mx-auto" style="background-color: {{ color_code }};">
+                <div class="color-name mx-auto">{{ color_name }}</div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% block script %}
+<!-- RAW Codes for colors -->
+<script type='text/javascript'>
+    $("button#hide-colors").click(function() {
+        $("#show-colors-debug").empty();
+    });
+</script>
+<style>
+    .color-square {
+        display: inline-block;
+        width: 50px;
+        height: 50px;
+        margin: 10px;
+        text-align: center;
+        vertical-align: middle;
+    }
+    .color-name {
+        display: inline-block;
+        margin-top: 10px;
+        font-size: 12px;
+    }
+</style>
+{% endblock script %}

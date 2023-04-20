@@ -1,0 +1,51 @@
+{% load static %}
+<aside class="sidebar">
+    <div class="sidebar-content">
+        <nav class="nav flex-column" id="dashboard-sidebar-nav">
+            <span class="nav-item active">
+                <a class="nav-link sidebar-link mx-auto active" id="update-dashboard-screen-button" value="main" href="#">
+                    <span class="nav-link-text">Dashboard</span>
+                </a>
+            </span>
+            <span class="nav-item">
+                <a class="nav-link sidebar-link mx-auto" id="update-dashboard-screen-button" value="main" href="#">
+                    <span class="nav-link-text">Dashboard</span>
+                </a>
+            </span>
+            <span class="nav-item">
+                <a class="nav-link sidebar-link mx-auto" id="update-dashboard-screen-button" value="main" href="#">
+                    <span class="nav-link-text">Dashboard</span>
+                </a>
+            </span>
+        </nav>
+    </div>
+    <div class="sidebar-footer">
+    </div>
+</aside>
+{% block script %}
+<script type="text/javascript">
+$(document).ready(function(){
+  $("#update-dashboard-screen-button").click(function(e){
+    e.preventDefault();
+    var value = $(this).attr('value');
+    updateDashboardScreen(value)
+  });
+}); // Add this in a static file in the future, maybe import this in the library imports in the future TODO
+</script>
+<script type="text/javascript">
+const nav = document.querySelector('#dashboard-sidebar-nav');
+nav.addEventListener('click', (event) => {
+    const clickedNavLink = event.target.closest('.nav-link');
+
+    if (clickedNavLink) {
+    const navLinks = nav.querySelectorAll('.nav-link');
+
+    navLinks.forEach((link) => {
+        link.classList.remove('active');
+    });
+
+    clickedNavLink.classList.add('active');
+    }
+});
+</script>
+{% endblock script %}

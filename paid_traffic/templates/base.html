@@ -1,0 +1,222 @@
+{% load static %}
+{% block html %}
+<!DOCTYPE html>
+<html lang="pt-br">
+{% block head %}
+<head>
+    <meta charset="UTF-8" />
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Favicon icon -->
+    <!-- empty -->
+    <title>{% block title %} Base title {% endblock %}</title>
+    {% comment "About header imports" %}
+        <h3>Needs to enter inside BASE_DIR/libs/middlewares/library/header_imports.json </h3>
+        <p>to change or add imports, using a online library or a static file</p>
+    {% endcomment %}
+    {% for library in request.header_imports %}
+        {% if library.valid == True %}
+            {% if library.type == 'link' %}
+                <link rel="stylesheet"
+                href="{{ library.href }}"
+                {% if library.integrity %} integrity="{{ library.integrity }}" {% endif %}
+                {% if library.crossorigin %} crossorigin="{{ library.crossorigin }}" {% endif %}/>
+            {% endif %}
+            {% if library.type == 'script' %}
+                <script type="text/javascript"
+                src="{{ library.href }}"
+                {% if library.integrity %} integrity="{{ library.integrity }}" {% endif %}
+                {% if library.crossorigin %} crossorigin="{{ library.crossorigin }}" {% endif %}></script>
+            {% endif %}
+        {% else %}
+            {% if library.type == 'link' %}
+                <link rel="stylesheet" href="{% static library.path %}"/>
+            {% endif %}
+            {% if library.type == 'script' %}
+                <script type="text/javascript" src="{% static library.path %}"></script>
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+    <style>
+        /* This is the root colors of the project, put in static in future TODO */
+        :root {
+            --white: {{ request.mw_colors.white }};
+            --black: {{ request.mw_colors.black }};
+            --main1: {{ request.mw_colors.main1 }};
+            --main2: {{ request.mw_colors.main2 }};
+            --main3: {{ request.mw_colors.main3 }};
+            --secondary1: {{ request.mw_colors.secondary1 }};
+            --secondary2: {{ request.mw_colors.secondary2 }};
+            --secondary3: {{ request.mw_colors.secondary3 }};
+            --tertiary1: {{ request.mw_colors.tertiary1 }};
+            --tertiary2: {{ request.mw_colors.tertiary2 }};
+            --tertiary3: {{ request.mw_colors.tertiary3 }};
+            --odd1: {{ request.mw_colors.odd1 }};
+            --odd2: {{ request.mw_colors.odd2 }};
+            --odd3: {{ request.mw_colors.odd3 }};
+            --even1: {{ request.mw_colors.even1 }};
+            --even2: {{ request.mw_colors.even2 }};
+            --even3: {{ request.mw_colors.even3 }};
+            --border-color: var(--main3);
+            --header-bg-color: var(--white);
+            --header-text-color: var(--black);
+            --header-text-hover-color: var(--even1);
+            --bg-color: var(--even2);
+            --sidebar-bg-color: var(--white);
+            --sidebar-text-color: var(--black);
+            --sidebar-hover-color: var(--even1);
+            --sidebar-text-hover-color: var(--black);
+            --sidebar-active-color: var(--even3);
+            --sidebar-text-active-color: var(--black);
+        }
+        :root {
+            --dashboard-sidebar-width: 200px;
+        }
+        /* Put all things inside of this inside static in future TODO */
+        /* Main style of project */
+        body {
+            background-color: var(--bg-color);
+        }
+        /* Header style of project */
+        nav.navbar {
+            background-color: var(--header-bg-color) !important;
+            border-bottom: 1px solid var(--border-color);
+        }
+        nav.navbar a {
+            color: var(--header-text-color) !important;
+            font-weight: 600;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+        nav.navbar a:hover {
+            color: var(--black) !important;
+            background-color: var(--header-text-hover-color);
+        }
+        /* Sidebar of dashboard style of project */
+        #dashboard-screen-content {
+            margin-left: var(--dashboard-sidebar-width);
+        }
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: var(--dashboard-sidebar-width);
+            background-color: var(--sidebar-bg-color);
+            z-index: 1000;
+            overflow-y: auto;
+            border-right: 1px solid var(--border-color);
+        }
+
+        .sidebar-content {
+            margin-top: 65px; /* Adjust according to the height of your header */
+        }
+
+        .nav-item {
+            margin-bottom: 10px;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            font-weight: 500;
+            padding: 8px 16px;
+            color: var(--sidebar-text-color);
+            border-radius: 4px;
+            transition: background-color 0.2s;
+        }
+
+        .nav-link.sidebar-link:hover {
+            background-color: var(--sidebar-hover-color);
+            color: var(--sidebar-text-hover-color);
+            text-decoration: none;
+        }
+
+        .nav-link.active {
+            background-color: var(--sidebar-active-color) !important;
+            color: var(--sidebar-text-active-color);
+        }
+
+        .nav-link-text {
+            margin-left: 8px;
+        }
+    </style>
+    {% block extra_style %}{% endblock extra_style %}
+</head>
+{% endblock head %}
+{% block body %}
+<body>
+    <div id="main-wrapper">
+        {% include 'header.html' %}
+        <div id="show-colors-debug"></div>
+        <div class="page-wrapper">
+            {% block content %}{% endblock content %}
+            {% include 'footer.html' %}
+        </div>
+    </div>
+    {% comment "About additional imports" %}
+        <h3>Needs to enter inside BASE_DIR/libs/middlewares/library/additional_imports.json </h3>
+        <p>to change or add imports, using a online library or a static file</p>
+    {% endcomment %}
+    {% for library in request.additional_imports %}
+        {% if library.valid == True %}
+            {% if library.type == 'link' %}
+                <link rel="stylesheet"
+                href="{{ library.href }}"
+                {% if library.integrity %} integrity="{{ library.integrity }}" {% endif %}
+                {% if library.crossorigin %} crossorigin="{{ library.crossorigin }}" {% endif %}/>
+            {% endif %}
+            {% if library.type == 'script' %}
+                <script type="text/javascript"
+                src="{{ library.href }}"
+                {% if library.integrity %} integrity="{{ library.integrity }}" {% endif %}
+                {% if library.crossorigin %} crossorigin="{{ library.crossorigin }}" {% endif %}></script>
+            {% endif %}
+        {% else %}
+            {% if library.type == 'link' %}
+                <link rel="stylesheet" href="{% static library.path %}"/>
+            {% endif %}
+            {% if library.type == 'script' %}
+                <script type="text/javascript" src="{% static library.path %}"></script>
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+<!--
+RAW scripts base, all inside this needs to be putted inside static in future and imported using the library
+but for now, this is easier for tests
+-->
+<script type='text/javascript'>
+// Show the colors palette
+$("#show-colors-button").click(function() {
+    $.ajax({
+        type: "GET",
+        url: "{% url 'colors' %}",
+        data: {},
+        success: function(data) {
+            $("#show-colors-debug").html(data["colors_template"]);
+        },
+        error: function(error) {
+            console.error("An error occurred:", error);
+        }
+    });
+});
+// Update the dashboard screens using the ARC
+function updateDashboardScreen(dashboardName) {
+    $.ajax({
+        type: "GET",
+        url: "{% url 'change_dashboard_screen' %}",
+        data: {'select-dashboard-screen': dashboardName},
+        success: function(data) {
+            $("#dashboard-screen-content").html(data["selected_dashboard_screen"]);
+        }
+    });
+}
+</script>
+<!-- Tests javascript, after working put inside static files -->
+<script type='text/javascript'>
+</script>
+    {% block script %}{% endblock script %}
+</body>
+{% endblock body %}
+{% endblock html %}

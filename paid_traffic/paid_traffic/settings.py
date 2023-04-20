@@ -32,7 +32,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
-    'apps.facebook_ads',
+    'apps.dashboard',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -43,6 +43,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'libs.middlewares.library.library_check.LibraryUrlMiddleware',
+    'libs.middlewares.colors.ColorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -133,3 +134,25 @@ STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+URL_TIMEOUT = None
+
+COLORS = {
+    'white':'#FFFFFF',
+    'black':'#000000',
+    'main1':'#1565C0',
+    'main2':'#42A5F5',
+    'main3':'#1E88E5',
+    'secondary1':'#FFC000',
+    'secondary2':'#B58B1D',
+    'secondary3':'#A67A03',
+    'tertiary1':'#F57A00',
+    'tertiary2':'#FD8929',
+    'tertiary3':'#FB7705',
+    'odd1':'#455A64',
+    'odd2':'#607D8B',
+    'odd3':'#263238',
+    'even1':'#E0E0E0',
+    'even2':'#F5F5F5',
+    'even3':'#BDBDBD'
+}
